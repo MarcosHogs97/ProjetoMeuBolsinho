@@ -14,6 +14,17 @@ const tiposMap: { [key: string]: tipos } = {
     "Material didático": tipos.Material_didático,
 };
 
+//Interface das despesas pessoais
+interface Despesas {
+
+    // "importação" de ( tipos ) para a interface de despesa para facilitar na criação da lista de despesas
+    categoria: tipos;
+    descricao: string;
+    valor: number;
+    date: string;
+}
+
+
 //Funcao para cadastras as despesas.
 function cadastrarDespesas() {
     // Obtenha uma coleção de todos os inputs do tipo rádio com o mesmo name
@@ -36,7 +47,7 @@ function cadastrarDespesas() {
 
     // Obtenha o valor do input do id "valor"
     let valorHTML = document.getElementById("valor") as HTMLInputElement;
-    let valor: number = -1;
+    let valor: number;
     valor = parseFloat(valorHTML.value);
 
     // Obtenha o valor do input do id "date"
@@ -67,8 +78,33 @@ function validacao(tipoSelecionado: string, descricao: string, valor: number, va
 
 };
 
+//Variável onde a lista de despesas será cadastrada 
+let listaDespesas: Despesas[] = [];
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo: string, descricao: string, valor: number, date: string) {
+
+    //Criação do objeto de depesas com os dados que serão fornecidos pelo usuário
+    const novaDespesa: Despesas = {
+        categoria: tiposMap[tipo],
+        descricao,
+        valor,
+        date,
+    };
+
+    let listaSalva = localStorage.getItem("listaDespesas")
+
+
+    if (listaSalva) {
+        listaDespesas = JSON.parse(listaSalva)
+    }
+
+
+    //Adiciona a nova despesa a lista de despesas
+    listaDespesas.push(novaDespesa);
+
+    //Salvando a lista dentro do LocalStorage
+    localStorage.setItem("listaDespesas", JSON.stringify(listaDespesas));
+
     //limpa os campos informados
     let descricaoHTML: HTMLInputElement = document.getElementById("descricao") as HTMLInputElement;
     descricaoHTML.value = '';
@@ -83,4 +119,76 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
+    exibirDespesasHTML();
+
+
 };
+
+// Função para exibir as depesas cadastradas
+function exibirDespesasHTML() {
+    //Faz a busca do elemento "registro" contido no HTML do projeto
+    const registoDespesas: HTMLElement = document.querySelector("#registro") as HTMLElement;
+
+    //Limpa o conteúdo anterior
+    registoDespesas.innerHTML = "";
+
+    //Adiciona as informações aos campos
+    listaDespesas.forEach((despesa, index) => {
+        const divDespesa = document.createElement('div');
+        divDespesa.innerHTML = `
+        <div class = "despesa">
+        <h4>Despesa ${index + 1}</h4>
+        <p>Categoria: ${despesa.categoria}</p>
+        <p>Descrição: ${despesa.descricao}</p>
+        <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+        <p>Data: ${despesa.date}</p>
+        </div>
+        
+        `;
+        registoDespesas.appendChild(divDespesa);
+    });
+
+
+}
+
+
+//Função para Recuperar as despesas e exibi-las em HTML
+function recuperarDespesas() {
+    //Busca as listas guardadas no localStorage para fazer sua recuperação 
+    const recuperacaoDeDespesas = JSON.parse(localStorage.getItem("listaDespesas") || ('[]'))!;
+
+    //Buscando elemtendo HTML ao qual será atribuido a exibição das despesas recuperadas    
+    const historicoDasDespesas = document.getElementById("historico")!;
+    historicoDasDespesas.innerHTML = '';
+    historicoDasDespesas.addEventListener("click", function () {
+        recuperarDespesas()
+    })
+    //IF verificando se há despesas para exibir
+
+    if (recuperacaoDeDespesas.lenght > 0) {
+        recuperacaoDeDespesas.forEach((despesa: Despesas, index: number) => {
+            const divDespesaRecuperada = document.createElement('div');
+            divDespesaRecuperada.innerHTML = `
+                <div class = "despesa">
+                <h4>Despesa ${index + 1}</h4>
+                <p>Categoria: ${despesa.categoria}</p>
+                <p>Descrição: ${despesa.descricao}</p>
+                <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+                <p>Data: ${despesa.date}</p>
+                </div>
+            `;
+
+            historicoDasDespesas.appendChild(divDespesaRecuperada);
+        });
+
+
+    } else {
+        alert("Sua lista foi gerada")
+    }
+    console.log(recuperacaoDeDespesas);
+
+}
+//Chama a função para recuperar e exibir as despesas
+document.getElementById("botaRecuperarDespesas")?.addEventListener("click", function () {
+    recuperarDespesas();
+});
