@@ -1,14 +1,13 @@
-"use strict";
 ;
 // Mapeamento do enum tipos.
-const tiposMap = {
+export const tiposMap = {
     "Lanches": "Lanches" /* tipos.Lanches */,
     "Livros": "Livros" /* tipos.Livros */,
     "Transporte": "Transporte" /* tipos.Transporte */,
     "Material didático": "Material did\u00E1tico" /* tipos.Material_didático */,
 };
 //Funcao para cadastras as despesas.
-function cadastrarDespesas() {
+export function cadastrarDespesas() {
     // Obtenha uma coleção de todos os inputs do tipo rádio com o mesmo name
     let radioButtons = document.querySelectorAll('input[name="tipo"]');
     let valorSelecionado = "";
@@ -49,7 +48,7 @@ function validacao(tipoSelecionado, descricao, valor, valorDate) {
 }
 ;
 //Variável onde serão cadastradas as despesas em suas respectivas categorias
-const despesasPorCategoria = {};
+export const despesasPorCategoria = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo, descricao, valor, date) {
     const categoria = tiposMap[tipo];
@@ -121,7 +120,7 @@ function exibirCategoria(categoriaDespesas, categoriaNome, registroDespesas) {
     });
 }
 //Função para Recuperar as despesas e exibi-las em HTML
-function recuperarDespesas() {
+export function recuperarDespesas() {
     let radioButtons = document.querySelectorAll('input[name="tipo"]');
     let valorSelecionado = "";
     let tipoSelecionado = "";

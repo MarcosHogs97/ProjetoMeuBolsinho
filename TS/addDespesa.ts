@@ -8,7 +8,7 @@ const enum tipos {
 
 
 // Mapeamento do enum tipos.
-export const tiposMap: { [key: string]: tipos } = {
+const tiposMap: { [key: string]: tipos } = {
     "Lanches": tipos.Lanches,
     "Livros": tipos.Livros,
     "Transporte": tipos.Transporte,
@@ -16,7 +16,7 @@ export const tiposMap: { [key: string]: tipos } = {
 };
 
 //Interface das despesas pessoais
-export interface Despesas {
+interface Despesas {
 
     // "importação" de ( tipos ) para a interface de despesa para facilitar na criação da lista de despesas
     categoria: tipos;
@@ -71,7 +71,7 @@ function validacao(tipoSelecionado: string, descricao: string, valor: number, va
 };
 
 //Variável onde serão cadastradas as despesas em suas respectivas categorias
-export const despesasPorCategoria: { [categoria: string]: Despesas[] } = {};
+const despesasPorCategoria: { [categoria: string]: Despesas[] } = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo: string, descricao: string, valor: number, date: string) {
 
@@ -117,7 +117,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
 };
 
 // Função para exibir as depesas cadastradas
-function exibirDespesas(categoria: string) {
+function exibirDespesas(categoriaSelecionada: string) {
     //Faz a busca do elemento "registro" contido no HTML do projeto
     const registroDespesas: HTMLElement = document.querySelector("#registro") as HTMLElement;
 
@@ -126,37 +126,49 @@ function exibirDespesas(categoria: string) {
 
 
 
-    if (despesasPorCategoria[categoria]) {
-        // Adiciona um cabeçalho com o nome da categoria
-        const headerCategoria = document.createElement('h3');
-        headerCategoria.textContent = categoria;
-        registroDespesas.appendChild(headerCategoria);
 
-        // Adiciona as informações das despesas da categoria atual
-        despesasPorCategoria[categoria].forEach((despesa, index) => {
-            const divDespesa = document.createElement('div');
-            divDespesa.innerHTML = `
-                <div class="despesa">
-                    <h4>Despesa ${index + 1}</h4>
-                    <p>Descrição: ${despesa.categoria}</p>
-                    <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                </div>
-            `;
-
-            registroDespesas.appendChild(divDespesa);
-        });
-    } else {
-        // Se não houver despesas na categoria, exibe uma mensagem
-        const mensagemSemDespesas = document.createElement('div');
-        mensagemSemDespesas.innerHTML = `<div class="despesa"> Nenhuma despesa encontrada para esta categoria. </div> `;
-        registroDespesas.appendChild(mensagemSemDespesas);
+    if (categoriaSelecionada === "todos") {
+        // Exibir todas as despesas
+        for (const key in despesasPorCategoria) {
+            if (despesasPorCategoria.hasOwnProperty(key)) {
+                const categoriaDespesas = despesasPorCategoria[key];
+                exibirCategoria(categoriaDespesas, key, registroDespesas);
+            }
+        }
+    } else if (despesasPorCategoria.hasOwnProperty(categoriaSelecionada)) {
+        // Exibir despesas de uma categoria específica
+        const categoriaDespesas = despesasPorCategoria[categoriaSelecionada];
+        exibirCategoria(categoriaDespesas, categoriaSelecionada, registroDespesas);
     }
+}
+
+// Função para exibir despesas de uma categoria
+function exibirCategoria(categoriaDespesas: Despesas[], categoriaNome: string, registroDespesas: HTMLElement) {
+    const headerCategoria = document.createElement('h3');
+    headerCategoria.textContent = categoriaNome;
+    registroDespesas.appendChild(headerCategoria);
+
+    categoriaDespesas.forEach((despesa, index) => {
+        const divDespesa = document.createElement('div');
+        divDespesa.innerHTML = `
+            <div class="despesa">
+                <h4>Despesa ${index + 1}</h4>
+                <p>Descrição: ${despesa.descricao}</p>
+                <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+                <p>Data: ${despesa.date}</p>
+            </div>
+        `;
+
+        registroDespesas.appendChild(divDespesa);
+    });
+
 }
 
 
 
+
 //Função para Recuperar as despesas e exibi-las em HTML
-export function recuperarDespesas() {
+function recuperarDespesas() {
     let radioButtons: NodeListOf<HTMLInputElement> = document.querySelectorAll('input[name="tipo"]') as NodeListOf<HTMLInputElement>;
     let valorSelecionado: string = "";
     let tipoSelecionado: string = "";
@@ -204,7 +216,7 @@ export function recuperarDespesas() {
 
 
 //Função para carregar os dados do localStorage quando a página é carregada
-function carregamentoDadosDoLocalStorage() {
+ function carregamentoDadosDoLocalStorage() {
     const dadosArmazenados = localStorage.getItem("despesasPorCategoria");
     if (dadosArmazenados) {
         const despesasSalvas = JSON.parse(dadosArmazenados);
@@ -219,7 +231,6 @@ function carregamentoDadosDoLocalStorage() {
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
 document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
     radio.addEventListener("click", (event) => {
-
         const categoriaSelecionada = (event?.target as HTMLInputElement).value;
         exibirDespesas(categoriaSelecionada);
     });
