@@ -141,9 +141,6 @@ function recuperarDespesas() {
             }
         });
     }
-    else {
-        alert("Sua lista foi gerada");
-    }
     console.log(recuperacaoDeDespesas);
 }
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
