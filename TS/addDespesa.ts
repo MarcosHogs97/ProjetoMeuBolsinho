@@ -69,32 +69,32 @@ function validacao(tipoSelecionado: string, descricao: string, valor: number, va
 
     };
 
-//Variável onde a lista de despesas será cadastrada 
-let listaDespesas: Despesas[] = [];
+//Variável onde serão cadastradas as despesas em suas respectivas categorias
+const despesasPorCategoria: {[categoria: string]: Despesas[]} = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo: string, descricao: string, valor: number, date: string) {
 
-    //Criação do objeto de depesas com os dados que serão fornecidos pelo usuário
+    const categoria = tiposMap[tipo];
+    //Criação do objeto de depesas com os dados que serão fornecidos
     const novaDespesa: Despesas = {
-        categoria: tiposMap[tipo],
+        categoria,
         descricao,
         valor,
         date,
     };
 
-    let listaSalva = localStorage.getItem("listaDespesas")
-
-
-    if (listaSalva) {
-        listaDespesas = JSON.parse(listaSalva)
+    
+    // Verifica se já existe um array para a categoria, se não tiver, será criado um novo
+    if (!despesasPorCategoria[categoria]) {
+        despesasPorCategoria[categoria] = [];
     }
 
 
-    //Adiciona a nova despesa a lista de despesas
-    listaDespesas.push(novaDespesa);
+    //Adiciona a despesa a sua lista de categoria correspondente
+    despesasPorCategoria[categoria].push(novaDespesa);
 
     //Salvando a lista dentro do LocalStorage
-    localStorage.setItem("listaDespesas", JSON.stringify(listaDespesas));
+    localStorage.setItem("despesasPorCategoria", JSON.stringify(despesasPorCategoria));
 
     //limpa os campos informados
     let descricaoHTML: HTMLInputElement = document.getElementById("descricao") as HTMLInputElement;
@@ -110,37 +110,49 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    exibirDespesas();
+    exibirDespesas(categoria);
 
 
 };
 
 // Função para exibir as depesas cadastradas
-function exibirDespesas() {
+function exibirDespesas(categoria: string) {
     //Faz a busca do elemento "registro" contido no HTML do projeto
-    const registoDespesas: HTMLElement = document.querySelector("#registro") as HTMLElement;
+    const registroDespesas: HTMLElement = document.querySelector("#registro") as HTMLElement;
 
     //Limpa o conteúdo anterior
-    registoDespesas.innerHTML = "";
-
-    //Adiciona as informações aos campos
-    listaDespesas.forEach((despesa, index) => {
-        const divDespesa = document.createElement('div');
-        divDespesa.innerHTML = `
-        <div class = "despesa">
-        <h4>Despesa ${index + 1}</h4>
-        <p>Categoria: ${despesa.categoria}</p>
-        <p>Descrição: ${despesa.descricao}</p>
-        <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-        <p>Data: ${despesa.date}</p>
-        </div>
-        
-        `;
-        registoDespesas.appendChild(divDespesa);
-    });
+    registroDespesas.innerHTML = "";
 
 
+
+    if (despesasPorCategoria[categoria]) {
+        // Adiciona um cabeçalho com o nome da categoria
+        const headerCategoria = document.createElement('h3');
+        headerCategoria.textContent = categoria;
+        registroDespesas.appendChild(headerCategoria);
+
+        // Adiciona as informações das despesas da categoria atual
+        despesasPorCategoria[categoria].forEach((despesa, index) => {
+            const divDespesa = document.createElement('div');
+            divDespesa.innerHTML = `
+                <div class="despesa">
+                    <h4>Despesa ${index + 1}</h4>
+                    <p>Descrição: ${despesa.descricao}</p>
+                    <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+                    <p>Data: ${despesa.date}</p>
+                </div>
+            `;
+
+            registroDespesas.appendChild(divDespesa);
+        });
+    } else {
+        // Se não houver despesas na categoria, exibe uma mensagem
+        const mensagemSemDespesas = document.createElement('p');
+        mensagemSemDespesas.textContent = "Nenhuma despesa encontrada para esta categoria.";
+        registroDespesas.appendChild(mensagemSemDespesas);
+    }
 }
+   
 
 
 //Função para Recuperar as despesas e exibi-las em HTML
@@ -158,9 +170,9 @@ function recuperarDespesas() {
         };
     };
     //Busca as listas guardadas no localStorage para fazer sua recuperação 
-    const recuperacaoDeDespesas = JSON.parse(localStorage.getItem("listaDespesas") || ('[]'))!;
+    const recuperacaoDeDespesas = JSON.parse(localStorage.getItem("despesasPorCategoria") || ('[]'))!;
 
-    //Buscando elemtendo HTML ao qual será atribuido a exibição das despesas recuperadas    
+    //Buscando elemento HTML ao qual será atribuido a exibição das despesas recuperadas    
     const historicoDasDespesas = document.getElementById("historico")!;
     historicoDasDespesas.innerHTML = '';
     //IF verificando se há despesas para exibir
@@ -191,7 +203,30 @@ function recuperarDespesas() {
     console.log(recuperacaoDeDespesas);
 
 }
+
+
+//Função para carregar os dados do localStorage quando a página é carregada
+function carregamentoDadosDoLocalStorage(){
+    const dadosArmazenados = localStorage.getItem("despesasPorCategoria");
+    if(dadosArmazenados){
+        const despesasSalvas = JSON.parse(dadosArmazenados);
+        for(const categoria in despesasSalvas){
+            despesasPorCategoria[categoria] = despesasSalvas[categoria]
+        } 
+        exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
+    }
+}
+
+
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
 document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
-    radio.addEventListener("click", recuperarDespesas);
+    radio.addEventListener("click", (event)=>{
+
+        const categoriaSelecionada = (event?.target as HTMLInputElement).value;
+        exibirDespesas(categoriaSelecionada);
+    });
 });
+
+//Chama a função  exibirDespesas e carrega os Dados do localStorage quando a página for carregada
+exibirDespesas("todos");
+carregamentoDadosDoLocalStorage();
