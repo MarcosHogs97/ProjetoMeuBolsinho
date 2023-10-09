@@ -117,7 +117,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
 };
 
 // Função para exibir as depesas cadastradas
-function exibirDespesas(categoria: string) {
+function exibirDespesas(categoriaSelecionada: string) {
     //Faz a busca do elemento "registro" contido no HTML do projeto
     const registroDespesas: HTMLElement = document.querySelector("#registro") as HTMLElement;
 
@@ -126,12 +126,8 @@ function exibirDespesas(categoria: string) {
 
 
 
-    if (despesasPorCategoria[categoria]) {
-        // Adiciona um cabeçalho com o nome da categoria
-        const headerCategoria = document.createElement('h3');
-        headerCategoria.textContent = categoria;
-        registroDespesas.appendChild(headerCategoria);
 
+<<<<<<< Updated upstream
         // Adiciona as informações das despesas da categoria atual
         despesasPorCategoria[categoria].forEach((despesa, index) => {
             const divDespesa = document.createElement('div');
@@ -153,6 +149,46 @@ function exibirDespesas(categoria: string) {
     }
 }
 
+=======
+    if (categoriaSelecionada === "todos") {
+        // Exibir todas as despesas
+        for (const key in despesasPorCategoria) {
+            if (despesasPorCategoria.hasOwnProperty(key)) {
+                const categoriaDespesas = despesasPorCategoria[key];
+                exibirCategoria(categoriaDespesas,key, registroDespesas);
+            }
+        }
+    } else if (despesasPorCategoria.hasOwnProperty(categoriaSelecionada)) {
+        // Exibir despesas de uma categoria específica
+        const categoriaDespesas = despesasPorCategoria[categoriaSelecionada];
+        exibirCategoria(categoriaDespesas, categoriaSelecionada, registroDespesas);
+    }
+}
+
+di// Função para exibir despesas de uma categoria
+function exibirCategoria(categoriaDespesas: Despesas[], categoriaNome: string, registroDespesas: HTMLElement) {
+    const headerCategoria = document.createElement('h3');
+    headerCategoria.textContent = categoriaNome;
+    registroDespesas.appendChild(headerCategoria);
+
+    categoriaDespesas.forEach((despesa, index) => {
+        const divDespesa = document.createElement('div');
+        divDespesa.innerHTML = `
+            <div class="despesa">
+                <h4>Despesa ${index + 1}</h4>
+                <p>Descrição: ${despesa.descricao}</p>
+                <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+                <p>Data: ${despesa.date}</p>
+            </div>
+        `;
+
+        registroDespesas.appendChild(divDespesa);
+    });
+
+}
+
+
+>>>>>>> Stashed changes
 
 
 //Função para Recuperar as despesas e exibi-las em HTML
