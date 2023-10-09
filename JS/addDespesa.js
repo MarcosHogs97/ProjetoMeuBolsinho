@@ -1,7 +1,6 @@
-"use strict";
 ;
 // Mapeamento do enum tipos.
-const tiposMap = {
+export const tiposMap = {
     "Lanches": "Lanches" /* tipos.Lanches */,
     "Livros": "Livros" /* tipos.Livros */,
     "Transporte": "Transporte" /* tipos.Transporte */,
@@ -49,7 +48,7 @@ function validacao(tipoSelecionado, descricao, valor, valorDate) {
 }
 ;
 //Variável onde serão cadastradas as despesas em suas respectivas categorias
-const despesasPorCategoria = {};
+export const despesasPorCategoria = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo, descricao, valor, date) {
     const categoria = tiposMap[tipo];
@@ -113,7 +112,7 @@ function exibirDespesas(categoria) {
     }
 }
 //Função para Recuperar as despesas e exibi-las em HTML
-function recuperarDespesas() {
+export function recuperarDespesas() {
     let radioButtons = document.querySelectorAll('input[name="tipo"]');
     let valorSelecionado = "";
     let tipoSelecionado = "";

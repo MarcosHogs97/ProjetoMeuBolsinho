@@ -8,7 +8,7 @@ const enum tipos {
 
 
 // Mapeamento do enum tipos.
-const tiposMap: { [key: string]: tipos } = {
+export const tiposMap: { [key: string]: tipos } = {
     "Lanches": tipos.Lanches,
     "Livros": tipos.Livros,
     "Transporte": tipos.Transporte,
@@ -16,7 +16,7 @@ const tiposMap: { [key: string]: tipos } = {
 };
 
 //Interface das despesas pessoais
-interface Despesas {
+export interface Despesas {
 
     // "importação" de ( tipos ) para a interface de despesa para facilitar na criação da lista de despesas
     categoria: tipos;
@@ -71,7 +71,7 @@ function validacao(tipoSelecionado: string, descricao: string, valor: number, va
 };
 
 //Variável onde serão cadastradas as despesas em suas respectivas categorias
-const despesasPorCategoria: { [categoria: string]: Despesas[] } = {};
+export const despesasPorCategoria: { [categoria: string]: Despesas[] } = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo: string, descricao: string, valor: number, date: string) {
 
@@ -156,7 +156,7 @@ function exibirDespesas(categoria: string) {
 
 
 //Função para Recuperar as despesas e exibi-las em HTML
-function recuperarDespesas() {
+export function recuperarDespesas() {
     let radioButtons: NodeListOf<HTMLInputElement> = document.querySelectorAll('input[name="tipo"]') as NodeListOf<HTMLInputElement>;
     let valorSelecionado: string = "";
     let tipoSelecionado: string = "";
