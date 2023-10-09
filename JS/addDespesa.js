@@ -1,5 +1,4 @@
 "use strict";
-var _a;
 ;
 // Mapeamento do enum tipos.
 const tiposMap = {
@@ -90,11 +89,11 @@ function adicionarAoRegistro(tipo, descricao, valor, date) {
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    exibirDespesasHTML();
+    exibirDespesas();
 }
 ;
 // Função para exibir as depesas cadastradas
-function exibirDespesasHTML() {
+function exibirDespesas() {
     //Faz a busca do elemento "registro" contido no HTML do projeto
     const registoDespesas = document.querySelector("#registro");
     //Limpa o conteúdo anterior
@@ -117,28 +116,41 @@ function exibirDespesasHTML() {
 }
 //Função para Recuperar as despesas e exibi-las em HTML
 function recuperarDespesas() {
+    let radioButtons = document.querySelectorAll('input[name="tipo"]');
+    let valorSelecionado = "";
+    let tipoSelecionado = "";
+    // Faz uma busca sobre os inputs do tipo rádio para encontrar o selecionado
+    for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+            valorSelecionado = radioButton.value;
+            tipoSelecionado = tiposMap[valorSelecionado];
+            break;
+        }
+        ;
+    }
+    ;
     //Busca as listas guardadas no localStorage para fazer sua recuperação 
     const recuperacaoDeDespesas = JSON.parse(localStorage.getItem("listaDespesas") || ('[]'));
     //Buscando elemtendo HTML ao qual será atribuido a exibição das despesas recuperadas    
     const historicoDasDespesas = document.getElementById("historico");
     historicoDasDespesas.innerHTML = '';
-    historicoDasDespesas.addEventListener("click", function () {
-        recuperarDespesas();
-    });
     //IF verificando se há despesas para exibir
-    if (recuperacaoDeDespesas.lenght > 0) {
+    if (recuperacaoDeDespesas) {
         recuperacaoDeDespesas.forEach((despesa, index) => {
-            const divDespesaRecuperada = document.createElement('div');
-            divDespesaRecuperada.innerHTML = `
-                <div class = "despesa">
-                <h4>Despesa ${index + 1}</h4>
-                <p>Categoria: ${despesa.categoria}</p>
-                <p>Descrição: ${despesa.descricao}</p>
-                <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                <p>Data: ${despesa.date}</p>
-                </div>
-            `;
-            historicoDasDespesas.appendChild(divDespesaRecuperada);
+            // Verifica se o tipo selecionado é "todos" ou se corresponde à categoria da despesa
+            if (tipoSelecionado === "todos" || tipoSelecionado === despesa.categoria) {
+                const divDespesaRecuperada = document.createElement("div");
+                divDespesaRecuperada.innerHTML = `
+                    <div class="despesa">
+                        <h4>Despesa ${index + 1}</h4>
+                        <p>Categoria: ${despesa.categoria}</p>
+                        <p>Descrição: ${despesa.descricao}</p>
+                        <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
+                        <p>Data: ${despesa.date}</p>
+                    </div>
+                `;
+                historicoDasDespesas.appendChild(divDespesaRecuperada);
+            }
         });
     }
     else {
@@ -146,7 +158,9 @@ function recuperarDespesas() {
     }
     console.log(recuperacaoDeDespesas);
 }
-//Chama a função para recuperar e exibir as despesas
-(_a = document.getElementById("botaRecuperarDespesas")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-    recuperarDespesas();
+// Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
+document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
+    radio.addEventListener("click", recuperarDespesas);
 });
+// Chama recuperarDespesas inicialmente
+recuperarDespesas();

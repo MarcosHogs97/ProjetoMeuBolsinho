@@ -23,33 +23,37 @@
                 <div class="campoDespesa">
                     <div class="radio-inputs">Tipos:
                         <label class="radio">
-                            <input class="tipo" type="radio" name="tipo" value="todos" checked>
+                            <input class="tipo" type="radio" name="tipo" value="todos" checked onclick="recuperarDespesas()">
                             <span class="name">Todos</span>
                         </label>
                         <label class="radio">
-                            <input class="tipo" type="radio" name="tipo" value="Lanches" >
+                            <input class="tipo" type="radio" name="tipo" value="Lanches" onclick="recuperarDespesas()">
                             <span class="name">Lanches</span>
                         </label>
                         <label class="radio">
-                            <input class="tipo" type="radio" name="tipo" value="Livros">
+                            <input class="tipo" type="radio" name="tipo" value="Livros" onclick="recuperarDespesas()">
                             <span class="name">Livros</span>
                         </label>
         
                         <label class="radio">
-                            <input class="tipo" type="radio" name="tipo" value="Transporte">
+                            <input class="tipo" type="radio" name="tipo" value="Transporte" onclick="recuperarDespesas()">
                             <span class="name">Transporte</span>
                         </label>
                         <label class="radio">
-                            <input class="tipo" type="radio" name="tipo" value="Material didático">
+                            <input class="tipo" type="radio" name="tipo" value="Material didático" onclick="recuperarDespesas()">
                             <span class="name">Material didático</span>
                         </label>
                     </div>
                 </div>
         </section>
-        <section class="registro">
+        <section id="registro">
+        
+        </section>
+        <section id="historico">
         
         </section>
     </main>
+    <script src="JS/addDespesa.js"></script>
 </body>
 
 </html>

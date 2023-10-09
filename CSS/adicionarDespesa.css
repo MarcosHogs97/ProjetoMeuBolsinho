@@ -1,10 +1,11 @@
-#adicionarDespesa{
+#adicionarDespesa {
     border-bottom: solid 2px #ffffff;
     color: #fff;
     background-color: #000;
     -webkit-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.64);
     box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.64);
 }
+
 .conteudo {
     padding: 30px;
     margin-top: 25px;
@@ -17,7 +18,7 @@
     margin-bottom: 20px;
     align-items: center;
     flex-direction: column;
-   
+
 }
 
 input {
@@ -38,6 +39,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .radio-inputs {
     position: relative;
     display: flex;
@@ -74,7 +76,7 @@ button {
     justify-content: center;
     border-radius: 0.5rem;
     border: none;
-    padding: .8rem ;
+    padding: .8rem;
     color: #000;
     transition: all .2s ease-in-out;
 }
@@ -84,18 +86,20 @@ button {
     color: #fff;
     font-weight: 600;
 }
+
 .radio-inputs .radio .name:hover {
     background-color: #d8d8d870;
     color: #000;
-    
+
 }
 
-.registro{
+.registro {
     padding: .5rem 0;
     width: 100%;
     height: auto;
 }
-.despesa{
+
+.despesa {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -104,8 +108,11 @@ button {
     border-radius: 5px;
     background-color: #d8d8d870;
     color: #000;
+    text-align: justify;
+    justify-content: space-between;
 }
-#botaoRecuperarDespesas{
+
+#botaoRecuperarDespesas {
     position: absolute;
     bottom: 15px;
     right: 15px;

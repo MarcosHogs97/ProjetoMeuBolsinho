@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -31,7 +31,7 @@ main {
     font-weight: 600;
 }
 
-.menu a{
+.menu a {
     color: #000;
     text-decoration: none;
     padding: 10px 20px;
@@ -39,11 +39,12 @@ main {
     margin: 5px;
 }
 
-.menu a:hover{
+.menu a:hover {
     background-color: #d8d8d870;
     color: #000;
-    border-bottom: solid 2px #000 ;
+    border-bottom: solid 2px #000;
 }
+
 .conteudo {
     padding: 30px;
     margin-top: 25px;
