@@ -86,31 +86,6 @@ function exibirDespesas(categoriaSelecionada) {
     const registroDespesas = document.querySelector("#registro");
     //Limpa o conteúdo anterior
     registroDespesas.innerHTML = "";
-<<<<<<< Updated upstream
-    if (despesasPorCategoria[categoria]) {
-        // Adiciona um cabeçalho com o nome da categoria
-        const headerCategoria = document.createElement('h3');
-        headerCategoria.textContent = categoria;
-        registroDespesas.appendChild(headerCategoria);
-        // Adiciona as informações das despesas da categoria atual
-        despesasPorCategoria[categoria].forEach((despesa, index) => {
-            const divDespesa = document.createElement('div');
-            divDespesa.innerHTML = `
-                <div class="despesa">
-                    <h4>Despesa ${index + 1}</h4>
-                    <p>Descrição: ${despesa.categoria}</p>
-                    <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                </div>
-            `;
-            registroDespesas.appendChild(divDespesa);
-        });
-    }
-    else {
-        // Se não houver despesas na categoria, exibe uma mensagem
-        const mensagemSemDespesas = document.createElement('div');
-        mensagemSemDespesas.innerHTML = `<div class="despesa"> Nenhuma despesa encontrada para esta categoria. </div> `;
-        registroDespesas.appendChild(mensagemSemDespesas);
-=======
     if (categoriaSelecionada === "todos") {
         // Exibir todas as despesas
         for (const key in despesasPorCategoria) {
@@ -124,7 +99,6 @@ function exibirDespesas(categoriaSelecionada) {
         // Exibir despesas de uma categoria específica
         const categoriaDespesas = despesasPorCategoria[categoriaSelecionada];
         exibirCategoria(categoriaDespesas, categoriaSelecionada, registroDespesas);
->>>>>>> Stashed changes
     }
 }
 // Função para exibir despesas de uma categoria
