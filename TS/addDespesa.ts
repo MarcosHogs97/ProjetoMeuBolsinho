@@ -61,22 +61,13 @@ function cadastrarDespesas() {
 function validacao(tipoSelecionado: string, descricao: string, valor: number, valorDate: string) {
 
     //Faz uma comparacao nos campos para ver se nao estao vazios ou indefinidos.
-    if (tipoSelecionado !== undefined && descricao !== "" && valor >= 0 && valorDate !== "") {
+    if (tipoSelecionado && descricao && valor >= 0 && valorDate) {
         adicionarAoRegistro(tipoSelecionado, descricao, valor, valorDate);
     } else {
-        if (tipoSelecionado == undefined) {
-            alert("Erro voce fez algo que nao devia!! :)");
-        } else if (descricao == "") {
-            alert("Voce deve informar uma descrição!");
-        } else if (valor <= -1) {
-            alert("Voce deve informar um valor maior que 0!");
-        } else if (valorDate == "") {
-            alert("Voce deve informar uma data completa!");
+            alert("Voce deve informar os campos corretamente!");
         };
 
     };
-
-};
 
 //Variável onde a lista de despesas será cadastrada 
 let listaDespesas: Despesas[] = [];
@@ -204,6 +195,3 @@ function recuperarDespesas() {
 document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
     radio.addEventListener("click", recuperarDespesas);
 });
-
-// Chama recuperarDespesas inicialmente
-recuperarDespesas();

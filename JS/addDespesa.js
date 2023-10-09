@@ -43,19 +43,7 @@ function validacao(tipoSelecionado, descricao, valor, valorDate) {
         adicionarAoRegistro(tipoSelecionado, descricao, valor, valorDate);
     }
     else {
-        if (tipoSelecionado == undefined) {
-            alert("Erro voce fez algo que nao devia!! :)");
-        }
-        else if (descricao == "") {
-            alert("Voce deve informar uma descrição!");
-        }
-        else if (valor <= -1) {
-            alert("Voce deve informar um valor maior que 0!");
-        }
-        else if (valorDate == "") {
-            alert("Voce deve informar uma data completa!");
-        }
-        ;
+        alert("Voce deve informar os campos corretamente!");
     }
     ;
 }
