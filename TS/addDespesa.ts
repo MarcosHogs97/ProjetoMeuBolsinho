@@ -65,13 +65,13 @@ function validacao(tipoSelecionado: string, descricao: string, valor: number, va
     if (tipoSelecionado && descricao && valor >= 0 && valorDate) {
         adicionarAoRegistro(tipoSelecionado, descricao, valor, valorDate);
     } else {
-            alert("Voce deve informar os campos corretamente!");
-        };
-
+        alert("Voce deve informar os campos corretamente!");
     };
 
+};
+
 //Variável onde serão cadastradas as despesas em suas respectivas categorias
-const despesasPorCategoria: {[categoria: string]: Despesas[]} = {};
+const despesasPorCategoria: { [categoria: string]: Despesas[] } = {};
 //adciona as informacoes ao registro
 function adicionarAoRegistro(tipo: string, descricao: string, valor: number, date: string) {
 
@@ -84,7 +84,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
         date,
     };
 
-    
+
     // Verifica se já existe um array para a categoria, se não tiver, será criado um novo
     if (!despesasPorCategoria[categoria]) {
         despesasPorCategoria[categoria] = [];
@@ -138,9 +138,8 @@ function exibirDespesas(categoria: string) {
             divDespesa.innerHTML = `
                 <div class="despesa">
                     <h4>Despesa ${index + 1}</h4>
-                    <p>Descrição: ${despesa.descricao}</p>
+                    <p>Descrição: ${despesa.categoria}</p>
                     <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                    <p>Data: ${despesa.date}</p>
                 </div>
             `;
 
@@ -148,12 +147,12 @@ function exibirDespesas(categoria: string) {
         });
     } else {
         // Se não houver despesas na categoria, exibe uma mensagem
-        const mensagemSemDespesas = document.createElement('p');
-        mensagemSemDespesas.textContent = "Nenhuma despesa encontrada para esta categoria.";
+        const mensagemSemDespesas = document.createElement('div');
+        mensagemSemDespesas.innerHTML = `<div class="despesa"> Nenhuma despesa encontrada para esta categoria. </div> `;
         registroDespesas.appendChild(mensagemSemDespesas);
     }
 }
-   
+
 
 
 //Função para Recuperar as despesas e exibi-las em HTML
@@ -198,20 +197,20 @@ function recuperarDespesas() {
         });
 
 
-  } 
+    }
     console.log(recuperacaoDeDespesas);
 
 }
 
 
 //Função para carregar os dados do localStorage quando a página é carregada
-function carregamentoDadosDoLocalStorage(){
+function carregamentoDadosDoLocalStorage() {
     const dadosArmazenados = localStorage.getItem("despesasPorCategoria");
-    if(dadosArmazenados){
+    if (dadosArmazenados) {
         const despesasSalvas = JSON.parse(dadosArmazenados);
-        for(const categoria in despesasSalvas){
+        for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria]
-        } 
+        }
         exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
     }
 }
@@ -219,7 +218,7 @@ function carregamentoDadosDoLocalStorage(){
 
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
 document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
-    radio.addEventListener("click", (event)=>{
+    radio.addEventListener("click", (event) => {
 
         const categoriaSelecionada = (event?.target as HTMLInputElement).value;
         exibirDespesas(categoriaSelecionada);

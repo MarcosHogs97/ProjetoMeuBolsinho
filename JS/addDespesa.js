@@ -98,9 +98,8 @@ function exibirDespesas(categoria) {
             divDespesa.innerHTML = `
                 <div class="despesa">
                     <h4>Despesa ${index + 1}</h4>
-                    <p>Descrição: ${despesa.descricao}</p>
+                    <p>Descrição: ${despesa.categoria}</p>
                     <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                    <p>Data: ${despesa.date}</p>
                 </div>
             `;
             registroDespesas.appendChild(divDespesa);
@@ -108,8 +107,8 @@ function exibirDespesas(categoria) {
     }
     else {
         // Se não houver despesas na categoria, exibe uma mensagem
-        const mensagemSemDespesas = document.createElement('p');
-        mensagemSemDespesas.textContent = "Nenhuma despesa encontrada para esta categoria.";
+        const mensagemSemDespesas = document.createElement('div');
+        mensagemSemDespesas.innerHTML = `<div class="despesa"> Nenhuma despesa encontrada para esta categoria. </div> `;
         registroDespesas.appendChild(mensagemSemDespesas);
     }
 }
