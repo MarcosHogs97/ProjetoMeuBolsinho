@@ -39,7 +39,7 @@ function cadastrarDespesas() {
 //faz uma validaçao dos campos  
 function validacao(tipoSelecionado, descricao, valor, valorDate) {
     //Faz uma comparacao nos campos para ver se nao estao vazios ou indefinidos.
-    if (tipoSelecionado !== undefined && descricao !== "" && valor >= 0 && valorDate !== "") {
+    if (tipoSelecionado && descricao && valor >= 0 && valorDate) {
         adicionarAoRegistro(tipoSelecionado, descricao, valor, valorDate);
     }
     else {
@@ -150,5 +150,3 @@ function recuperarDespesas() {
 document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
     radio.addEventListener("click", recuperarDespesas);
 });
-// Chama recuperarDespesas inicialmente
-recuperarDespesas();
