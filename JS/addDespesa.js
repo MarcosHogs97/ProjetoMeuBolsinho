@@ -152,9 +152,6 @@ function recuperarDespesas() {
             }
         });
     }
-    else {
-        alert("Sua lista foi gerada");
-    }
     console.log(recuperacaoDeDespesas);
 }
 //Função para carregar os dados do localStorage quando a página é carregada

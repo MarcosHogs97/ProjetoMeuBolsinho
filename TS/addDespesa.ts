@@ -6,6 +6,7 @@ const enum tipos {
     Material_didático = "Material didático"
 };
 
+
 // Mapeamento do enum tipos.
 const tiposMap: { [key: string]: tipos } = {
     "Lanches": tipos.Lanches,
@@ -197,9 +198,7 @@ function recuperarDespesas() {
         });
 
 
-    } else {
-        alert("Sua lista foi gerada")
-    }
+  } 
     console.log(recuperacaoDeDespesas);
 
 }
