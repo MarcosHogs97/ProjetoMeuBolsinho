@@ -127,29 +127,6 @@ function exibirDespesas(categoriaSelecionada: string) {
 
 
 
-<<<<<<< Updated upstream
-        // Adiciona as informações das despesas da categoria atual
-        despesasPorCategoria[categoria].forEach((despesa, index) => {
-            const divDespesa = document.createElement('div');
-            divDespesa.innerHTML = `
-                <div class="despesa">
-                    <h4>Despesa ${index + 1}</h4>
-                    <p>Descrição: ${despesa.categoria}</p>
-                    <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                </div>
-            `;
-
-            registroDespesas.appendChild(divDespesa);
-        });
-    } else {
-        // Se não houver despesas na categoria, exibe uma mensagem
-        const mensagemSemDespesas = document.createElement('div');
-        mensagemSemDespesas.innerHTML = `<div class="despesa"> Nenhuma despesa encontrada para esta categoria. </div> `;
-        registroDespesas.appendChild(mensagemSemDespesas);
-    }
-}
-
-=======
     if (categoriaSelecionada === "todos") {
         // Exibir todas as despesas
         for (const key in despesasPorCategoria) {
@@ -165,7 +142,7 @@ function exibirDespesas(categoriaSelecionada: string) {
     }
 }
 
-di// Função para exibir despesas de uma categoria
+// Função para exibir despesas de uma categoria
 function exibirCategoria(categoriaDespesas: Despesas[], categoriaNome: string, registroDespesas: HTMLElement) {
     const headerCategoria = document.createElement('h3');
     headerCategoria.textContent = categoriaNome;
@@ -188,7 +165,6 @@ function exibirCategoria(categoriaDespesas: Despesas[], categoriaNome: string, r
 }
 
 
->>>>>>> Stashed changes
 
 
 //Função para Recuperar as despesas e exibi-las em HTML
