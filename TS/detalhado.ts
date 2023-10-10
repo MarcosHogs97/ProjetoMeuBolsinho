@@ -223,7 +223,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria]
         }
-        exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
+    
     }
 }
 
@@ -237,5 +237,4 @@ document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
 });
 
 //Chama a função  exibirDespesas e carrega os Dados do localStorage quando a página for carregada
-exibirDespesas("todos");
 carregamentoDadosDoLocalStorage();

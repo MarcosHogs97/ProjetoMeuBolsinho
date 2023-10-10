@@ -3,7 +3,7 @@ const enum tipos {
     Lanches = "Lanches",
     Livros = "Livros",
     Transporte = "Transporte",
-    Material_didático = "Material didático"
+    Material_didatico = "Material didático"
 };
 
 
@@ -12,7 +12,7 @@ const tiposMap: { [key: string]: tipos } = {
     "Lanches": tipos.Lanches,
     "Livros": tipos.Livros,
     "Transporte": tipos.Transporte,
-    "Material didático": tipos.Material_didático,
+    "Material didático": tipos.Material_didatico,
 };
 
 //Interface das despesas pessoais
@@ -110,7 +110,6 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
 
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     exibirDespesas(categoria);
 
 

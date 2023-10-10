@@ -153,9 +153,9 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
         divDespesa.innerHTML = `
             <div class="despesa">
                 <h4>Despesa ${index + 1}</h4>
-                <p>Descrição: ${despesa.descricao}</p>
+                <p>Descrição: ${despesa.categoria}</p>
                 <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                <p>Data: ${despesa.date}</p>
+               
             </div>
         `;
 
@@ -191,6 +191,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
 
     if (recuperacaoDeDespesas) {
         recuperacaoDeDespesas.forEach((despesa: Despesas, index: number) => {
+            
             // Verifica se o tipo selecionado é "todos" ou se corresponde à categoria da despesa
             if (tipoSelecionado === "todos" || tipoSelecionado === despesa.categoria) {
                 const divDespesaRecuperada = document.createElement("div");
@@ -223,7 +224,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria]
         }
-        exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
+        exibirDespesas("Lanches")
     }
 }
 
@@ -237,5 +238,5 @@ document.querySelectorAll('input[name="unificado"]').forEach((radio) => {
 });
 
 //Chama a função  exibirDespesas e carrega os Dados do localStorage quando a página for carregada
-exibirDespesas("todos");
+
 carregamentoDadosDoLocalStorage();

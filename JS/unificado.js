@@ -112,9 +112,9 @@ function exibirCategoria(categoriaDespesas, categoriaNome, registroDespesas) {
         divDespesa.innerHTML = `
             <div class="despesa">
                 <h4>Despesa ${index + 1}</h4>
-                <p>Descrição: ${despesa.descricao}</p>
+                <p>Descrição: ${despesa.categoria}</p>
                 <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                <p>Data: ${despesa.date}</p>
+               
             </div>
         `;
         registroDespesas.appendChild(divDespesa);
@@ -169,7 +169,7 @@ function carregamentoDadosDoLocalStorage() {
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria];
         }
-        exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
+        exibirDespesas("Lanches");
     }
 }
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
@@ -180,5 +180,4 @@ document.querySelectorAll('input[name="unificado"]').forEach((radio) => {
     });
 });
 //Chama a função  exibirDespesas e carrega os Dados do localStorage quando a página for carregada
-exibirDespesas("todos");
 carregamentoDadosDoLocalStorage();

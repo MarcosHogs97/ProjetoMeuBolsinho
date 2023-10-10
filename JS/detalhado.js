@@ -169,7 +169,6 @@ function carregamentoDadosDoLocalStorage() {
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria];
         }
-        exibirDespesas("todos"); // Irá exibir todas as despesas por padrão
     }
 }
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado
@@ -180,5 +179,4 @@ document.querySelectorAll('input[name="tipo"]').forEach((radio) => {
     });
 });
 //Chama a função  exibirDespesas e carrega os Dados do localStorage quando a página for carregada
-exibirDespesas("todos");
 carregamentoDadosDoLocalStorage();

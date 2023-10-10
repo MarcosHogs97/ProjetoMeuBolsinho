@@ -5,7 +5,7 @@ const tiposMap = {
     "Lanches": "Lanches" /* tipos.Lanches */,
     "Livros": "Livros" /* tipos.Livros */,
     "Transporte": "Transporte" /* tipos.Transporte */,
-    "Material didático": "Material did\u00E1tico" /* tipos.Material_didático */,
+    "Material didático": "Material did\u00E1tico" /* tipos.Material_didatico */,
 };
 //Funcao para cadastras as despesas.
 function cadastrarDespesas() {
@@ -77,7 +77,6 @@ function adicionarAoRegistro(tipo, descricao, valor, date) {
     inputDateElement.value = '';
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     exibirDespesas(categoria);
 }
 ;
