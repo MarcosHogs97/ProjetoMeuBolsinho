@@ -77,7 +77,6 @@ function adicionarAoRegistro(tipo, descricao, valor, date) {
     inputDateElement.value = '';
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     exibirDespesas(categoria);
 }
 ;

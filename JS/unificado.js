@@ -77,7 +77,6 @@ function adicionarAoRegistro(tipo, descricao, valor, date) {
     inputDateElement.value = '';
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     exibirDespesas(categoria);
 }
 ;
@@ -141,24 +140,6 @@ function recuperarDespesas() {
     const historicoDasDespesas = document.getElementById("historico");
     historicoDasDespesas.innerHTML = '';
     //IF verificando se há despesas para exibir
-    if (recuperacaoDeDespesas) {
-        recuperacaoDeDespesas.forEach((despesa, index) => {
-            // Verifica se o tipo selecionado é "todos" ou se corresponde à categoria da despesa
-            if (tipoSelecionado === "todos" || tipoSelecionado === despesa.categoria) {
-                const divDespesaRecuperada = document.createElement("div");
-                divDespesaRecuperada.innerHTML = `
-                    <div class="despesa">
-                        <h4>Despesa ${index + 1}</h4>
-                        <p>Categoria: ${despesa.categoria}</p>
-                        <p>Descrição: ${despesa.descricao}</p>
-                        <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                        <p>Data: ${despesa.date}</p>
-                    </div>
-                `;
-                historicoDasDespesas.appendChild(divDespesaRecuperada);
-            }
-        });
-    }
     console.log(recuperacaoDeDespesas);
 }
 //Função para carregar os dados do localStorage quando a página é carregada
@@ -169,7 +150,7 @@ function carregamentoDadosDoLocalStorage() {
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria];
         }
-        exibirDespesas("Lanches");
+        recuperarDespesas();
     }
 }
 // Adicione um event listener para os radio buttons para chamar recuperarDespesas quando um deles for clicado

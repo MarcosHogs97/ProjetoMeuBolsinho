@@ -110,7 +110,6 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
 
     //exibi no console as informacoes, logo mais guarda no registro em uma lista
     console.log(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
-    alert(`tipo: ${tipo}, Descrição: ${descricao}, valor: ${valor}, data: ${date}`);
     exibirDespesas(categoria);
 
 
@@ -189,28 +188,6 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
     historicoDasDespesas.innerHTML = '';
     //IF verificando se há despesas para exibir
 
-    if (recuperacaoDeDespesas) {
-        recuperacaoDeDespesas.forEach((despesa: Despesas, index: number) => {
-            
-            // Verifica se o tipo selecionado é "todos" ou se corresponde à categoria da despesa
-            if (tipoSelecionado === "todos" || tipoSelecionado === despesa.categoria) {
-                const divDespesaRecuperada = document.createElement("div");
-                divDespesaRecuperada.innerHTML = `
-                    <div class="despesa">
-                        <h4>Despesa ${index + 1}</h4>
-                        <p>Categoria: ${despesa.categoria}</p>
-                        <p>Descrição: ${despesa.descricao}</p>
-                        <p>Valor: R$ ${despesa.valor.toFixed(2)}</p>
-                        <p>Data: ${despesa.date}</p>
-                    </div>
-                `;
-
-                historicoDasDespesas.appendChild(divDespesaRecuperada);
-            }
-        });
-
-
-    }
     console.log(recuperacaoDeDespesas);
 
 }
@@ -224,7 +201,7 @@ function adicionarAoRegistro(tipo: string, descricao: string, valor: number, dat
         for (const categoria in despesasSalvas) {
             despesasPorCategoria[categoria] = despesasSalvas[categoria]
         }
-        exibirDespesas("Lanches")
+        recuperarDespesas()
     }
 }
 
